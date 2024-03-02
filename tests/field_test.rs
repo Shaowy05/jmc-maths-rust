@@ -82,6 +82,8 @@ impl Clone for TestField {
     }
 }
 
+impl Copy for TestField {}
+
 #[test]
 fn field_add_test() {
     let a = TestField { value: 1 };
