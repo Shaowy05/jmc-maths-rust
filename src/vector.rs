@@ -1,6 +1,7 @@
 use super::field::Field;
 use std::ops::{Add, Index, Mul, Sub};
 
+#[derive(Debug)]
 pub struct Vector<T: Field, const N: usize>([T; N]);
 
 impl <T: Field, const N: usize> Vector<T, N> {
@@ -8,7 +9,11 @@ impl <T: Field, const N: usize> Vector<T, N> {
         Vector(elements)
     }
 
-    pub fn size() -> usize {
+    pub fn dimension() -> usize {
+        N
+    }
+
+    pub fn size(&self) -> usize {
         N
     }
 }
@@ -25,13 +30,13 @@ impl<T: Field, const N: usize> Add for Vector<T, N> {
     type Output = Self;
 
     fn add(self, other: Self) -> Self {
-        let mut new_elements = [T::additive_identity(); N];
+        let mut elements = [T::additive_identity(); N];
 
         for i in 0..N {
-            new_elements[i] = self.0[i] + other.0[i];
+            elements[i] = self.0[i] + other.0[i];
         }
 
-        Vector::new(new_elements)
+        Vector::new(elements)
     }
 }
 
@@ -39,13 +44,13 @@ impl<T: Field, const N: usize> Sub for Vector<T, N> {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
-        let mut new_elements = [T::additive_identity(); N];
+        let mut elements = [T::additive_identity(); N];
 
         for i in 0..N {
-            new_elements[i] = self.0[i] - other.0[i];
+            elements[i] = self.0[i] - other.0[i];
         }
 
-        Vector::new(new_elements)
+        Vector::new(elements)
     }
 }
 
@@ -53,13 +58,13 @@ impl<T: Field, const N: usize> Mul<T> for Vector<T, N> {
     type Output = Vector<T, N>;
 
     fn mul(self, other: T) -> Vector<T, N> {
-        let mut new_elements = [T::multiplicative_identity(); N];
+        let mut elements = [T::multiplicative_identity(); N];
 
         for i in 0..N {
-            new_elements[i] = self.0[i] * other;
+            elements[i] = self.0[i] * other;
         }
 
-        Vector::new(new_elements)
+        Vector::new(elements)
     }
 }
 
@@ -74,5 +79,17 @@ impl<T: Field, const N: usize> Mul<Vector<T, N>> for Vector<T, N> {
         }
 
         result
+    }
+}
+
+impl<T: Field, const N: usize> PartialEq for Vector<T, N> {
+    fn eq(&self, other: &Self) -> bool {
+        for i in 0..N {
+            if self.0[i] != other.0[i] {
+                return false;
+            }
+        }
+
+        true
     }
 }
