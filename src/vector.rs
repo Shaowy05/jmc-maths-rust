@@ -1,91 +1,78 @@
 use super::field::Field;
 use std::ops::{Add, Index, Mul, Sub};
 
-#[derive(Debug, PartialEq, Clone)]
-pub struct Vector<T: Field> {
-    elements: Vec<T>,
-}
+pub struct Vector<T: Field, const N: usize>([T; N]);
 
-impl<T: Field> Vector<T> {
-    pub fn new(elements: Vec<T>) -> Vector<T> {
-        Vector { elements }
+impl <T: Field, const N: usize> Vector<T, N> {
+    pub fn new(elements: [T; N]) -> Vector<T, N> {
+        Vector(elements)
     }
 
-    pub fn size(&self) -> usize {
-        self.elements.len()
+    pub fn size() -> usize {
+        N
     }
 }
 
-impl<T: Field> Index<usize> for Vector<T> {
+impl<T: Field, const N: usize> Index<usize> for Vector<T, N> {
     type Output = T;
 
     fn index(&self, index: usize) -> &T {
-        &self.elements[index]
+        &self.0[index]
     }
 }
 
-impl<T: Field> Add for Vector<T> {
+impl<T: Field, const N: usize> Add for Vector<T, N> {
     type Output = Self;
 
     fn add(self, other: Self) -> Self {
-        if self.size() != other.size() {
-            panic!("Vectors must have the same size");
-        }
-        let elements = self
-            .elements
-            .iter()
-            .zip(other.elements.iter())
-            .map(|(a, b)| a.clone() + b.clone())
-            .collect();
+        let mut new_elements = [T::additive_identity(); N];
 
-        Vector::new(elements)
+        for i in 0..N {
+            new_elements[i] = self.0[i] + other.0[i];
+        }
+
+        Vector::new(new_elements)
     }
 }
 
-impl<T: Field> Sub for Vector<T> {
+impl<T: Field, const N: usize> Sub for Vector<T, N> {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
-        if self.size() != other.size() {
-            panic!("Vectors must have the same size");
+        let mut new_elements = [T::additive_identity(); N];
+
+        for i in 0..N {
+            new_elements[i] = self.0[i] - other.0[i];
         }
-        let elements = self
-            .elements
-            .iter()
-            .zip(other.elements.iter())
-            .map(|(a, b)| a.clone() - b.clone())
-            .collect();
 
-        Vector::new(elements)
+        Vector::new(new_elements)
     }
 }
 
-impl<T: Field> Mul<T> for Vector<T> {
-    type Output = Vector<T>;
+impl<T: Field, const N: usize> Mul<T> for Vector<T, N> {
+    type Output = Vector<T, N>;
 
-    fn mul(self, other: T) -> Vector<T> {
-        let elements = self.elements.iter().map(|e| e.clone() * other).collect();
+    fn mul(self, other: T) -> Vector<T, N> {
+        let mut new_elements = [T::multiplicative_identity(); N];
 
-        Vector::new(elements)
+        for i in 0..N {
+            new_elements[i] = self.0[i] * other;
+        }
+
+        Vector::new(new_elements)
     }
 }
 
-impl<T: Field> Mul<Vector<T>> for Vector<T> {
+impl<T: Field, const N: usize> Mul<Vector<T, N>> for Vector<T, N> {
     type Output = T;
 
-    fn mul(self, other: Vector<T>) -> T {
-        if self.size() != other.size() {
-            panic!("Vectors must have the same size");
-        }
-        let elements = self
-            .elements
-            .iter()
-            .zip(other.elements.iter())
-            .map(|(a, b)| a.clone() * b.clone())
-            .collect::<Vec<T>>();
+    fn mul(self, other: Vector<T, N>) -> T {
+        let mut result = T::additive_identity();
 
-        elements
-            .iter()
-            .fold(T::additive_identity(), |acc, e| acc + *e)
+        for i in 0..N {
+            result = result + (self.0[i] * other.0[i]);
+        }
+
+        result
     }
 }

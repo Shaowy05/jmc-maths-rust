@@ -9,7 +9,7 @@ use jmc_maths_rust::vector::Vector;
 fn vector_creation_test() {
     #[allow(unused_variables)]
     let v = Vector::new(
-        vec![
+        [
             Rational::new(Rational64::new(1, -2)),
             Rational::new(Rational64::new(3, 4)),
             Rational::new(Rational64::new(-5, 3)),
