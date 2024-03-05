@@ -1,9 +1,10 @@
 use jmc_maths_rust::field::Field;
 use std::ops::{Add, Div, Mul, Neg, Sub};
+use std::fmt::Debug;
 
 use num_rational::Rational64;
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct Rational {
     value: Rational64,
 }
@@ -95,6 +96,12 @@ impl Neg for Rational {
 impl PartialEq for Rational {
     fn eq(&self, other: &Self) -> bool {
         self.value == other.value
+    }
+}
+
+impl Debug for Rational {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}/{}", self.value.numer(), self.value.denom())
     }
 }
 
