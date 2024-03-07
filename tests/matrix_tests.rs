@@ -184,6 +184,195 @@ fn matrix_is_upper_triangular_test() {
 }
 
 #[test]
+fn matrix_is_strictly_upper_triangular_test() {
+    let m1 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 4),
+                Rational::new_from_args(0, 3),
+            ],
+            [
+                Rational::new_from_args(4, 1),
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+            ],
+            [
+                Rational::new_from_args(3, 1),
+                Rational::new_from_args(4, -2),
+                Rational::new_from_args(0, 2),
+            ],
+        ]
+    );
+
+    let m2 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(3, 4),
+                Rational::new_from_args(-5, 3),
+            ],
+            [
+                Rational::new_from_args(2, -7),
+                Rational::new_from_args(-9, -2),
+                Rational::new_from_args(6, 5),
+            ],
+        ]
+    );
+
+    let m3 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(0, 4),
+                Rational::new_from_args(0, 3),
+            ],
+            [
+                Rational::new_from_args(4, 1),
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+            ],
+            [
+                Rational::new_from_args(3, 1),
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+            ],
+        ]
+    );
+
+    assert_eq!(m1.is_strictly_upper_triangular(), true);
+    assert_eq!(m2.is_strictly_upper_triangular(), false);
+    assert_eq!(m3.is_strictly_upper_triangular(), false);
+
+}
+
+#[test]
+fn matrix_is_lower_triangular_test() {
+    let m1 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(0, 2),
+                Rational::new_from_args(3, 1),
+                Rational::new_from_args(4, -2),
+            ],
+            [
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(5, 4),
+                Rational::new_from_args(4, 3),
+            ],
+            [
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+                Rational::new_from_args(4, 1),
+            ],
+        ]
+    );
+
+    let m2 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(3, 4),
+                Rational::new_from_args(-5, 3),
+            ],
+            [
+                Rational::new_from_args(2, -7),
+                Rational::new_from_args(-9, -2),
+                Rational::new_from_args(6, 5),
+            ],
+        ]
+    );
+
+    let m3 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(0, 4),
+                Rational::new_from_args(0, 3),
+            ],
+            [
+                Rational::new_from_args(4, 1),
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+            ],
+            [
+                Rational::new_from_args(3, 1),
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+            ],
+        ]
+    );
+
+    assert_eq!(m1.is_lower_triangular(), true);
+    assert_eq!(m2.is_lower_triangular(), false);
+    assert_eq!(m3.is_lower_triangular(), false);
+
+}
+
+#[test]
+fn matrix_is_strictly_lower_triangular_test() {
+    let m1 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(0, 2),
+                Rational::new_from_args(3, 1),
+                Rational::new_from_args(4, -2),
+            ],
+            [
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 4),
+                Rational::new_from_args(4, 3),
+            ],
+            [
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+                Rational::new_from_args(0, 1),
+            ],
+        ]
+    );
+
+    let m2 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(3, 4),
+                Rational::new_from_args(-5, 3),
+            ],
+            [
+                Rational::new_from_args(2, -7),
+                Rational::new_from_args(-9, -2),
+                Rational::new_from_args(6, 5),
+            ],
+        ]
+    );
+
+    let m3 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(0, 4),
+                Rational::new_from_args(0, 3),
+            ],
+            [
+                Rational::new_from_args(4, 1),
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+            ],
+            [
+                Rational::new_from_args(3, 1),
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(0, 5),
+            ],
+        ]
+    );
+
+    assert_eq!(m1.is_strictly_lower_triangular(), true);
+    assert_eq!(m2.is_strictly_lower_triangular(), false);
+    assert_eq!(m3.is_strictly_lower_triangular(), false);
+
+}
+
+#[test]
 fn matrix_index_test() {
     let m = Matrix::new(
         [
