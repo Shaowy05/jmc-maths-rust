@@ -10,8 +10,16 @@ pub struct Rational {
 }
 
 impl Rational {
+    #[allow(dead_code)]
     pub fn new(value: Rational64) -> Rational {
         Rational { value }
+    }
+
+    #[allow(dead_code)]
+    pub fn new_from_args(numerator: i64, denominator: i64) -> Rational {
+        Rational {
+            value: Rational64::new(numerator, denominator),
+        }
     }
 }
 
