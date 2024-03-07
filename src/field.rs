@@ -1,4 +1,4 @@
-use std::ops::{Add, Div, Mul, Sub};
+use std::{fmt::Debug, ops::{Add, Div, Mul, Sub}};
 
 pub trait Field:
     Add<Self, Output = Self>
@@ -8,6 +8,7 @@ pub trait Field:
     + PartialEq
     + Clone
     + Copy
+    + Debug
 {
     fn additive_identity() -> Self;
     fn multiplicative_identity() -> Self;
