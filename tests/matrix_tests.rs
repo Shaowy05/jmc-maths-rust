@@ -398,6 +398,39 @@ fn matrix_index_test() {
 }
 
 #[test]
+fn matrix_negation_test() {
+    let m = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(3, 4),
+                Rational::new_from_args(-5, 3),
+            ],
+            [
+                Rational::new_from_args(2, -7),
+                Rational::new_from_args(-9, -2),
+                Rational::new_from_args(6, 5),
+            ],
+        ]
+    );
+
+    assert_eq!(-m, Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, 2),
+                Rational::new_from_args(-3, 4),
+                Rational::new_from_args(5, 3),
+            ],
+            [
+                Rational::new_from_args(2, 7),
+                Rational::new_from_args(-9, 2),
+                Rational::new_from_args(-6, 5),
+            ],
+        ]
+    ));
+}
+
+#[test]
 fn matrix_addition_test() {
     let m1 = Matrix::new(
         [
@@ -460,13 +493,77 @@ fn matrix_addition_test() {
     ));
 }
 
+
+#[test]
+fn matrix_subtraction_test() {
+    let m1 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(3, 4),
+                Rational::new_from_args(-5, 3),
+            ],
+            [
+                Rational::new_from_args(2, -7),
+                Rational::new_from_args(-9, -2),
+                Rational::new_from_args(6, 5),
+            ],
+            [
+                Rational::new_from_args(13, 3),
+                Rational::new_from_args(2, -5),
+                Rational::new_from_args(0, 5),
+            ],
+        ]
+    );
+
+    let m2 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(8, -3),
+                Rational::new_from_args(3, 7),
+                Rational::new_from_args(-5, 3),
+            ],
+            [
+                Rational::new_from_args(3, -7),
+                Rational::new_from_args(-9, 5),
+                Rational::new_from_args(7, 57),
+            ],
+            [
+                Rational::new_from_args(4, 1),
+                Rational::new_from_args(0, -2),
+                Rational::new_from_args(3, 5),
+            ],
+        ]
+    );
+
+    assert_eq!(m1 - m2, Matrix::new(
+        [
+            [
+                Rational::new_from_args(13, 6),
+                Rational::new_from_args(9, 28),
+                Rational::new_from_args(0, 1),
+            ],
+            [
+                Rational::new_from_args(1, 7),
+                Rational::new_from_args(63, 10),
+                Rational::new_from_args(307, 285),
+            ],
+            [
+                Rational::new_from_args(1, 3),
+                Rational::new_from_args(2, -5),
+                Rational::new_from_args(-3, 5),
+            ],
+        ]
+    ));
+}
+
 #[test]
 fn matrix_print_test() {
     let m = Matrix::new(
         [
             [
                 Rational::new_from_args(1, -2),
-                Rational::new_from_args(3, 4),
+                Rational::new_from_args(9, 28),
                 Rational::new_from_args(-5, 3),
             ],
             [

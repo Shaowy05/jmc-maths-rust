@@ -1,7 +1,7 @@
 use super::field::Field;
 use super::vector::Vector;
 use std::fmt::{self, Debug, Formatter};
-use std::ops::{ Index, Mul, Add, Sub };
+use std::ops::{ Index, Mul, Add, Sub, Neg };
 
 #[derive(Clone, PartialEq)]
 pub struct Matrix<T: Field, const M: usize, const N: usize>([[T; M]; N]);
@@ -160,6 +160,22 @@ impl<T: Field, const N: usize, const M: usize> Index<usize> for Matrix<T, M, N> 
     }
 }
 
+impl<T: Field, const N: usize, const M: usize> Neg for Matrix<T, M, N> {
+    type Output = Self;
+
+    fn neg(self) -> Self {
+        let mut elements = [[T::additive_identity(); M]; N];
+
+        for i in 0..N {
+            for j in 0..M {
+                elements[i][j] = -self.0[i][j];
+            }
+        }
+
+        Matrix::new(elements)
+    }
+}
+
 impl<T: Field, const N: usize, const M: usize> Add for Matrix<T, M, N> {
     type Output = Self;
 
@@ -178,6 +194,15 @@ impl<T: Field, const N: usize, const M: usize> Add for Matrix<T, M, N> {
 
         Matrix::new(elements)
     }
+}
+
+impl<T: Field, const N: usize, const M: usize> Sub for Matrix<T, M, N> {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        self + (-other)
+    }
+    
 }
 
 impl<T: Field, const M: usize, const N: usize> Debug for Matrix<T, M, N> {
