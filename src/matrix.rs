@@ -1,7 +1,7 @@
 use super::field::Field;
 use super::vector::Vector;
 use std::fmt::{self, Debug, Formatter};
-use std::ops::Index;
+use std::ops::{ Index, Mul, Add, Sub };
 
 #[derive(Clone, PartialEq)]
 pub struct Matrix<T: Field, const M: usize, const N: usize>([[T; M]; N]);
@@ -157,6 +157,26 @@ impl<T: Field, const N: usize, const M: usize> Index<usize> for Matrix<T, M, N> 
 
     fn index(&self, index: usize) -> &[T; M] {
         &self.0[index]
+    }
+}
+
+impl<T: Field, const N: usize, const M: usize> Add for Matrix<T, M, N> {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        if self.size() != other.size() {
+            panic!("Matrix addition requires matrices of the same size");
+        }
+
+        let mut elements = [[T::additive_identity(); M]; N];
+
+        for i in 0..N {
+            for j in 0..M {
+                elements[i][j] = self.0[i][j] + other.0[i][j];
+            }
+        }
+
+        Matrix::new(elements)
     }
 }
 
