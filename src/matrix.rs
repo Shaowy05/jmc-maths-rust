@@ -26,7 +26,7 @@ impl<T: Field, const M: usize, const N: usize> Matrix<T, M, N> {
 
         for i in 0..M {
             for j in 0..N {
-                elements[i][j] = vectors[i][j];
+                elements[j][i] = vectors[i][j];
             }
         }
 
@@ -203,6 +203,25 @@ impl<T: Field, const N: usize, const M: usize> Sub for Matrix<T, M, N> {
         self + (-other)
     }
     
+}
+
+impl<T: Field, const N: usize, const M: usize> Mul<Matrix<T, N, M>> for Matrix<T, M, N> {
+    type Output = Matrix<T, M, M>;
+
+    fn mul(self, other: Matrix<T, N, M>) -> Matrix<T, M, M> {
+        let mut new_rows = [Vector::new([T::additive_identity(); M]); M];
+
+        for i in 0..M {
+            let row = self.row(i);
+            let mut new_row_elements = [T::additive_identity(); M];
+            for j in 0..M {
+                new_row_elements[j] = row * (other.column(j));
+            }
+            new_rows[i] = Vector::new(new_row_elements);
+        }
+        Matrix::new_from_row_vectors(new_rows)
+    }
+
 }
 
 impl<T: Field, const M: usize, const N: usize> Debug for Matrix<T, M, N> {

@@ -1,6 +1,7 @@
 use super::field::Field;
 use std::{fmt::Debug, ops::{Add, Index, Mul, Sub}};
 
+#[derive(Clone)]
 pub struct Vector<T: Field, const M: usize>([T; M]);
 
 impl <T: Field, const M: usize> Vector<T, M> {
@@ -102,3 +103,5 @@ impl<T: Field, const M: usize> Debug for Vector<T, M> {
         self.0.fmt(f)
     }
 }
+
+impl<T: Field, const M: usize> Copy for Vector<T, M> {}

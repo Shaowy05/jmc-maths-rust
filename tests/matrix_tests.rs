@@ -558,6 +558,61 @@ fn matrix_subtraction_test() {
 }
 
 #[test]
+fn matrix_multiplication_test() {
+    let m1 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(3, 4),
+                Rational::new_from_args(-5, 3),
+            ],
+            [
+                Rational::new_from_args(2, -7),
+                Rational::new_from_args(-9, -2),
+                Rational::new_from_args(6, 5),
+            ],
+        ]
+    );
+
+    let m2 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(8, -3),
+                Rational::new_from_args(3, 7),
+            ],
+            [
+                Rational::new_from_args(3, -7),
+                Rational::new_from_args(-9, 5),
+            ],
+            [
+                Rational::new_from_args(4, 1),
+                Rational::new_from_args(0, -2),
+            ],
+        ]
+    );
+
+    assert_eq!(m1 * m2, Matrix::new(
+        [
+            [
+                Rational::new_from_args(178, 147),
+                Rational::new_from_args(-1, 14),
+                Rational::new_from_args(1562, 315),
+            ],
+            [
+                Rational::new_from_args(51, 70),
+                Rational::new_from_args(-1179, 140),
+                Rational::new_from_args(-253, 175),
+            ],
+            [
+                Rational::new_from_args(-2, 1),
+                Rational::new_from_args(3, 1),
+                Rational::new_from_args(-20, 3),
+            ],
+        ]
+    ));
+}
+
+#[test]
 fn matrix_print_test() {
     let m = Matrix::new(
         [

@@ -200,6 +200,22 @@ fn vector_dot_product_test() {
         ]
     );
 
+    let c = Vector::new(
+        [
+            Rational::new_from_args(1, -2),
+            Rational::new_from_args(-2, 7),
+        ]
+    );
+    
+    let d = Vector::new(
+        [
+            Rational::new_from_args(-3, 7),
+            Rational::new_from_args(-9, 5),
+        ]
+    );
+
+    assert_eq!(c * d, Rational::new_from_args(51, 70));
+
     assert_eq!(
         a * b,
         Rational::new_from_args(3, 1)
