@@ -224,6 +224,23 @@ impl<T: Field, const N: usize, const M: usize> Mul<Matrix<T, N, M>> for Matrix<T
 
 }
 
+impl<T: Field, const N: usize, const M: usize> Mul<T> for Matrix<T, M, N> {
+    type Output = Self;
+
+    fn mul(self, scalar: T) -> Self {
+        let mut elements = [[T::additive_identity(); M]; N];
+
+        for i in 0..N {
+            for j in 0..M {
+                elements[i][j] = self.0[i][j] * scalar;
+            }
+        }
+
+        Matrix::new(elements)
+    }
+    
+}
+
 impl<T: Field, const M: usize, const N: usize> Debug for Matrix<T, M, N> {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(f, "Matrix{{")?;

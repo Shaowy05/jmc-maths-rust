@@ -613,6 +613,39 @@ fn matrix_multiplication_test() {
 }
 
 #[test]
+fn matrix_scalar_multiplication_test() {
+    let m1 = Matrix::new(
+        [
+            [
+                Rational::new_from_args(1, -2),
+                Rational::new_from_args(3, 4),
+                Rational::new_from_args(-5, 3),
+            ],
+            [
+                Rational::new_from_args(2, -7),
+                Rational::new_from_args(-9, -2),
+                Rational::new_from_args(6, 5),
+            ],
+        ]
+    );
+
+    assert_eq!(m1 * Rational::new_from_args(3, 4), Matrix::new(
+        [
+            [
+                Rational::new_from_args(-3, 8),
+                Rational::new_from_args(9, 16),
+                Rational::new_from_args(-15, 12),
+            ],
+            [
+                Rational::new_from_args(-3, 14),
+                Rational::new_from_args(27, 8),
+                Rational::new_from_args(9, 10),
+            ],
+        ]
+    ));
+}
+
+#[test]
 fn matrix_print_test() {
     let m = Matrix::new(
         [
